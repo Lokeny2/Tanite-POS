@@ -1,6 +1,18 @@
-// The Data Base
-const inventory = ["Apple", "Banana", "Cherry", "Date"];
-const prices = [50, 30, 80, 100];
+
+// 1. The Data Base (20 Fruits)
+const inventory = [
+    "Apple", "Banana", "Cherry", "Date", "Mango", 
+    "Orange", "Papaya", "Watermelon", "Pineapple", "Avocado", 
+    "Passion Fruit", "Lemon", "Lime", "Grape", "Strawberry", 
+    "Plum", "Pear", "Guava", "Tangerine", "Kiwi"
+];
+
+const prices = [
+    50, 30, 80, 100, 60, 
+    40, 120, 350, 150, 50, 
+    20, 15, 10, 200, 250, 
+    70, 90, 45, 35, 110
+];
 
 
 // Speaking With Calculate Button
@@ -27,11 +39,18 @@ if(itemFound){
     const qtyNum = Number(quantity)
     let total = foundPrice * qtyNum;
     
+    let discountMessage = "";
+
     if(qtyNum > 10){
         total = total * 0.9;
+        
+        alert("10% Bulk Discount Applied! ✅ You  saved KSh " + (foundPrice * qtyNum * 0.1)
+        .toFixed(2) + "!")
     }
 
-    display.innerText = `Total for ${qtyNum} ${searchFor}(s): KSh.${total.toFixed(2)}.`;
+const plural = qtyNum > 1 ? "s" : "";
+
+    display.innerText = `Total for ${qtyNum} ${searchFor}${plural}: KSh.${total.toFixed(2)}.`;
     display.style.color = "green";
 }
 else{
