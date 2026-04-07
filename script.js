@@ -3,7 +3,7 @@ const inventory = ["Apple", "Banana", "Cherry", "Date"];
 const prices = [50, 30, 80, 100];
 
 
-// Speaking With HTML
+// Speaking With Calculate Button
 document.getElementById("calcBtn").onclick = function(){
     const searchFor = document.getElementById("fruitInput").value;
     const quantity = document.getElementById("qtyInput").value;
@@ -31,7 +31,7 @@ if(itemFound){
         total = total * 0.9;
     }
 
-    display.innerText = `Total for ${qtyNum} ${searchFor}(s): KSh.${total}.`;
+    display.innerText = `Total for ${qtyNum} ${searchFor}(s): KSh.${total.toFixed(2)}.`;
     display.style.color = "green";
 }
 else{
@@ -39,3 +39,14 @@ else{
     display.style.color = "red"
 }
 }
+
+// Speaking with the Clear Button
+document.getElementById("clearBtn").onclick = function(){
+    // 1.Clear input boxes
+    document.getElementById("fruitInput").value = "";
+    document.getElementById("qtyInput").value = "";
+
+
+    // 2.Clear result message
+    document.getElementById("receipt").innerText = "";
+};
