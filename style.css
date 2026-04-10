@@ -47,7 +47,7 @@ button{
 
 /* 6.The Clear Button */
 #clearBtn{
-    background-color: rgb(265, 0, 0);
+    background-color: rgb(255, 0, 0);
     margin-top: 10px;
     border: 2px solid rgb(152, 226, 4);
     color: white;
