@@ -47,7 +47,7 @@ button{
 
 /* 6.The Clear Button */
 #clearBtn{
-    background-color: rgb(255, 0, 0);
+    background-color: rgb(3, 51, 54);
     margin-top: 10px;
     border: 2px solid rgb(152, 226, 4);
     color: white;
@@ -82,7 +82,7 @@ button{
     border-color: #2e7d32;
 }
 
-/* This is what was missing — the active pill style */
+/* The active pill style */
 .filter-btn.active {
     background-color: #2e7d32;
     color: white;
