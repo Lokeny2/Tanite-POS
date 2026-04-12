@@ -61,6 +61,7 @@ const inventory = [
     {name: "Biscuits", price: 50, category: "Grocery", unit: "packet"}, {name: "Chocolate", price: 200, category: "Grocery", unit: "bar"}
 ];
 
+// Initialize Cart from LocalStorage or empty array
 let cart = JSON.parse(localStorage.getItem("miniMartCart")) || [];
 
 const select = document.getElementById("productSelect");
@@ -87,17 +88,12 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
     btn.onclick = function() {
         const category = this.getAttribute("data-category");
         populateDropdown(category);
-        
         document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
         this.classList.add("active");
-
     };
 });
 
-// Initialize the app with all items
-populateDropdown("All");
-
-// 4: Calculation and Discount Logic
+// 4: Calculation (Preview Price) Logic
 document.getElementById("calcBtn").onclick = function() {
     const productName = select.value;
     const quantity = document.getElementById("qtyInput").value;
@@ -110,45 +106,31 @@ document.getElementById("calcBtn").onclick = function() {
         const qtyNum = Number(quantity);
         let total = product.price * qtyNum;
         
-        if (qtyNum > 10) {
-            total *= 0.9;
-            alert(`10% Bulk Discount Applied!`);
-        }
+        if (qtyNum > 10) total *= 0.9; // Preview 10% Discount
 
-        // Logic to handle Plurals and Units
+        // Pluralization logic for display
         let displayLabel = "";
         if (qtyNum === 1) {
             displayLabel = `1 ${product.name}`;
         } else {
             if (product.unit === "piece") {
-                // Pluralize the product name directly
-                if (product.name.endsWith("y")) {
-                    displayLabel = `${qtyNum} ${product.name.slice(0, -1)}ies`;
-                } else if (product.name.endsWith("o")) {
-                    displayLabel = `${qtyNum} ${product.name}es`;
-                } else {
-                    displayLabel = `${qtyNum} ${product.name}s`;
-                }
+                if (product.name.endsWith("y")) displayLabel = `${qtyNum} ${product.name.slice(0, -1)}ies`;
+                else if (product.name.endsWith("o")) displayLabel = `${qtyNum} ${product.name}es`;
+                else displayLabel = `${qtyNum} ${product.name}s`;
             } else {
-                // Pluralize the unit instead of the uncountable product name
-                let unitPlural = product.unit;
-                if (unitPlural.endsWith("y")) unitPlural = unitPlural.slice(0, -1) + "ies";
-                else if (unitPlural === "box") unitPlural = "boxes";
-                else unitPlural += "s";
-                
+                let unitPlural = product.unit.endsWith("y") ? product.unit.slice(0, -1) + "ies" : product.unit + "s";
                 displayLabel = `${qtyNum} ${unitPlural} of ${product.name}`;
             }
         }
 
-        receiptDisplay.innerText = `Total for ${displayLabel}: KSh ${total.toFixed(2)}`;
+        receiptDisplay.innerText = `Preview: ${displayLabel} = KSh ${total.toFixed(2)}`;
         receiptBox.classList.remove("hidden");
-
     } else {
-        alert("Please select an item and a valid quantity.");
+        alert("Please select an item and quantity first!");
     }
-
 };
 
+// 5: Add to Cart Logic
 document.getElementById("addToCartBtn").onclick = function() {
     const productName = select.value;
     const quantity = document.getElementById("qtyInput").value;
@@ -157,57 +139,76 @@ document.getElementById("addToCartBtn").onclick = function() {
     if (product && quantity > 0) {
         const qtyNum = Number(quantity);
         let total = product.price * qtyNum;
-        
-        // Applying the bulk discount logic 
         if (qtyNum > 10) total *= 0.9;
 
-        let cartItem = {
-            name: productName,
-            qty: qtyNum,
-            totalPrice: total
-        };
-
-        // The "Search and Merge" logic 
+        // Search if item already exists in cart
         let existingItem = cart.find(item => item.name === productName);
+
         if (existingItem) {
             existingItem.qty += qtyNum;
             existingItem.totalPrice += total;
         } else {
-            cart.push(cartItem);
+            cart.push({ name: productName, qty: qtyNum, totalPrice: total });
         }
 
-        renderCart();
-
-        localStorage.setItem("miniMartCart", JSON.stringify(cart));
-
+        saveAndRender();
         document.getElementById("receiptBox").classList.add("hidden");
     } else {
-        alert("Select a product first!");
+        alert("Select a product to add!");
     }
 };
 
+// 6: Render Cart with Remove Button
 function renderCart() {
+    const cartList = document.getElementById("cartList");
+    const totalDisplay = document.getElementById("totalDisplay");
     let grandTotal = 0;
-    const cartContainer = document.getElementById("cartList");
-    const totalDisplay = document.getElementById("totalDisplay"); // Step 1: Find the display
     
-    cartContainer.innerHTML = "";
+    cartList.innerHTML = "";
 
-    cart.forEach((item) => {
+    if (cart.length === 0) {
+        cartList.innerHTML = '<li style="border:none; color:var(--muted)">Cart is empty</li>';
+        totalDisplay.innerText = "0.00";
+        return;
+    }
+
+    cart.forEach((item, index) => {
         grandTotal += item.totalPrice;
-  
-        cartContainer.innerHTML += `<li>${item.name} x ${item.qty} - KSh ${item.totalPrice.toFixed(2)}</li>`;
+        cartList.innerHTML += `
+            <li>
+                ${item.name} x ${item.qty} 
+                <span>
+                    KSh ${item.totalPrice.toFixed(2)} 
+                    <button class="remove-btn" onclick="removeItem(${index})">×</button>
+                </span>
+            </li>`;
     });
 
-   
     totalDisplay.innerText = grandTotal.toFixed(2);
 }
 
-// 5: UI Reset State
-document.getElementById("clearBtn").onclick = function() {
-    select.value = "";
-    document.getElementById("qtyInput").value = "";
-    document.getElementById("receiptBox").classList.add("hidden");
+// 7: Helper functions for removal and storage
+window.removeItem = function(index) {
+    cart.splice(index, 1);
+    saveAndRender();
 };
 
+function saveAndRender() {
+    localStorage.setItem("miniMartCart", JSON.stringify(cart));
+    renderCart();
+}
+
+// 8: Reset & Clear Feature
+document.getElementById("clearBtn").onclick = function() {
+    if (confirm("Clear entire cart and inputs?")) {
+        cart = [];
+        saveAndRender();
+        select.value = "";
+        document.getElementById("qtyInput").value = "";
+        document.getElementById("receiptBox").classList.add("hidden");
+    }
+};
+
+// Initial setup
+populateDropdown("All");
 renderCart();
