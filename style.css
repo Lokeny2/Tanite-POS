@@ -215,3 +215,26 @@ input:focus, select:focus {
     color: var(--amber);
     font-size: 22px;
 }
+
+main {
+    display: flex;
+    gap: 30px; 
+    align-items: flex-start; /* Align them at the top */
+    max-width: 900px; /* Give room for both cards */
+    width: 95%;
+}
+
+/* Ensuring the cart doesn't shrink */
+.cart-container {
+    flex: 1; 
+    min-width: 320px;
+    margin-top: 0; 
+}
+.remove-btn {
+    background: none;
+    border: none;
+    color: #b91c1c;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0 5px;
+}
