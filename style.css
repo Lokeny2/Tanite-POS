@@ -1,240 +1,107 @@
 /* 1. The Reset & Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap');
 
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'DM Sans', sans-serif;
-}
+*{ padding: 0; margin: 0; box-sizing: border-box; font-family: 'DM Sans', sans-serif; }
 
 /* 2. Style Variables (The Colour Story) */
 :root {
-    --forest:      #025539;
-    --green:       #1e7a46;
-    --green-light: #e8f5ee;
-    --amber:       #d4860a;
-    --cream:       #faf9f6;
-    --ink:         #1c1c1a;
-    --muted:       #6b7167;
-    --border:      #e0ddd6;
-    --radius-sm:   8px;
-    --radius-md:   14px;
-    --radius-lg:   22px;
+    --forest: #025539; --green: #1e7a46; --green-light: #e8f5ee;
+    --amber: #d4860a; --cream: #faf9f6; --ink: #1c1c1a;
+    --muted: #6b7167; --border: #e0ddd6;
+    --radius-sm: 8px; --radius-md: 14px; --radius-lg: 22px;
 }
 
 /* 3. The Body */
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: var(--forest);
+body {
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; background-color: var(--forest);
     background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
     background-size: 22px 22px;
 }
 
-/* 4. The Calculator Card */
-.calculator{
-    background-color: var(--cream);
-    padding: 30px;
-    width: 100%;
-    max-width: 420px;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.22);
-    overflow: hidden;
-}
-
-/* 5. The Header Band */
-.calc-header {
-    background: var(--green);
-    padding: 28px 28px 22px;
-    margin: -30px -30px 20px -30px;
-    position: relative;
-}
-
-.calc-header h1 {
-    font-family: 'Fraunces', serif;
-    font-size: 28px;
-    color: #ffffff;
-}
-
-.calc-header .subtitle {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 14px;
-    color: rgba(255,255,255,0.72);
-}
-
-/* 6. Filter Row & Pills */
-.filter-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-bottom: 16px;
-}
-
-.filter-btn {
-    padding: 5px 15px;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 20px;
-    background: #fff;
-    color: var(--muted);
-    border: 1.5px solid var(--border);
-    cursor: pointer;
-    transition: all 0.17s ease;
-}
-
-.filter-btn.active {
-    background-color: var(--green);
-    color: white;
-    border-color: var(--green);
-}
-
-/* 7. The Inputs & Labels */
-.input-section {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
-}
-
-label {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
-}
-
-input[type="number"], select {
-    width: 100%;
-    padding: 12px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border);
-    background: #ffffff;
-    outline: none;
-}
-
-input:focus, select:focus {
-    border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(30,122,70,0.1);
-}
-
-/* 8. Action Buttons */
-.action-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-#calcBtn, #addToCartBtn {
-    padding: 14px;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-}
-
-#calcBtn {
-    flex: 1;
-    background-color: var(--green-light);
-    color: var(--forest);
-    border: 1.5px solid var(--green);
-}
-
-#addToCartBtn {
-    flex: 2;
-    background: var(--amber);
-    color: white;
-}
-
-/* 9. The Clear Button */
-#clearBtn {
-    flex: 1;
-    background-color: #fff;
-    border: 1.5px solid #fca5a5;
-    color: #b91c1c;
-    padding: 14px;
-    font-weight: bold;
-    border-radius: var(--radius-md);
-}
-
-/* 10. Receipt Box (Preview) */
-.receipt-box {
-    margin-top: 14px;
-    padding: 14px 16px;
-    background: var(--green-light);
-    border-left: 4px solid var(--green);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-}
-
-.receipt-box.hidden { display: none; }
-
-#receipt {
-    font-weight: 600;
-    color: var(--forest);
-}
-
-/* 11. Shopping Cart UI */
-.cart-container {
-    background-color: var(--cream);
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: var(--radius-md);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    border: 1.5px solid var(--border);
-}
-
-#cartList {
-    list-style: none;
-    margin-bottom: 15px;
-}
-
-#cartList li {
-    padding: 8px 0;
-    border-bottom: 1px solid var(--green-light);
-    color: var(--ink);
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between; 
-}
-
-.cart-total {
-    border-top: 2px dashed var(--green);
-    padding-top: 15px;
-    margin-top: 10px;
-    text-align: right;
-    font-family: 'Fraunces', serif;
-    color: var(--forest);
-}
-
-#totalDisplay {
-    font-weight: 700;
-    color: var(--amber);
-    font-size: 22px;
-}
-
+/* 4. The Main Layout */
 main {
-    display: flex;
-    gap: 30px; 
-    align-items: flex-start; /* Align them at the top */
-    max-width: 900px; /* Give room for both cards */
-    width: 95%;
+    display: flex; gap: 30px; align-items: flex-start;
+    max-width: 900px; width: 95%;
 }
 
-/* Ensuring the cart doesn't shrink */
+/* 5. The Calculator Card */
+.calculator {
+    background-color: var(--cream); padding: 30px; width: 100%;
+    max-width: 420px; border-radius: var(--radius-lg);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.22); overflow: hidden;
+}
+
+/* 6. The Header Band */
+.calc-header {
+    background: var(--green); padding: 28px 28px 22px;
+    margin: -30px -30px 20px -30px;
+}
+.calc-header h1 { font-family: 'Fraunces', serif; font-size: 28px; color: #fff; }
+.calc-header .subtitle { font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; color: rgba(255,255,255,0.72); }
+
+/* 7. Filter Row & Pills */
+.filter-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+.filter-btn {
+    padding: 5px 15px; font-size: 12px; font-weight: 600; border-radius: 20px;
+    background: #fff; color: var(--muted); border: 1.5px solid var(--border);
+    cursor: pointer; transition: all 0.17s ease;
+}
+.filter-btn.active { background-color: var(--green); color: white; border-color: var(--green); }
+
+/* 8. The Inputs & Labels */
+.input-section { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; }
+input[type="number"], select {
+    width: 100%; padding: 12px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: #fff; outline: none;
+}
+input:focus, select:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(30,122,70,0.1); }
+
+/* 9. The Price Preview */
+.price-preview {
+    background: var(--green-light); border-left: 3px solid var(--green);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 8px 12px; font-size: 13px; color: var(--forest); margin: 2px 0;
+}
+.price-preview.hidden { display: none; }
+.preview-saving { color: var(--amber); font-size: 12px; }
+
+/* 10. The Feedback Box */
+.feedback-box { padding: 9px 12px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+.feedback-box.hidden { display: none; }
+.feedback-error { background: #fff3f3; border-left: 3px solid #e05252; color: #b91c1c; }
+.feedback-success { background: var(--green-light); border-left: 3px solid var(--green); color: var(--forest); }
+
+/* 11. Action Buttons */
+.action-row { display: flex; gap: 10px; margin-bottom: 10px; }
+#calcBtn, #addToCartBtn { padding: 14px; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; border: none; }
+#calcBtn { flex: 1; background-color: var(--green-light); color: var(--forest); border: 1.5px solid var(--green); }
+#addToCartBtn { flex: 2; background: var(--amber); color: white; }
+#clearBtn { flex: 1; background: #fff; border: 1.5px solid #fca5a5; color: #b91c1c; padding: 14px; font-weight: bold; border-radius: var(--radius-md); }
+
+/* 12. The Receipt Box */
+.receipt-box { margin-top: 14px; padding: 14px 16px; background: var(--green-light); border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.receipt-box.hidden { display: none; }
+#receipt { font-weight: 600; color: var(--forest); }
+.discount-note { color: var(--amber); font-size: 12px; font-weight: 500; }
+
+/* 13. The Shopping Cart */
 .cart-container {
-    flex: 1; 
-    min-width: 320px;
-    margin-top: 0; 
+    flex: 1; min-width: 320px; background-color: var(--cream);
+    padding: 20px; border-radius: var(--radius-md);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1.5px solid var(--border);
 }
-.remove-btn {
-    background: none;
-    border: none;
-    color: #b91c1c;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 0 5px;
-}
+.cart-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.cart-title { font-family: 'Fraunces', serif; font-size: 18px; color: var(--forest); font-weight: 700; margin: 0; }
+.cart-badge { background: var(--amber); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 20px; min-width: 22px; text-align: center; }
+.cart-badge.hidden { display: none; }
+#cartList { list-style: none; margin-bottom: 15px; }
+#cartList li { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--green-light); font-size: 14px; }
+.cart-item-name { flex: 1; color: var(--ink); }
+.cart-item-meta { font-size: 12px; color: var(--muted); }
+.cart-item-price { font-weight: 600; color: var(--forest); }
+.cart-empty { color: var(--muted); font-size: 13px; border: none !important; }
+.cart-total { border-top: 2px dashed var(--green); padding-top: 15px; margin-top: 10px; text-align: right; font-family: 'Fraunces', serif; color: var(--forest); }
+#totalDisplay { font-weight: 700; color: var(--amber); font-size: 22px; }
+.remove-btn { background: none; border: none; color: #b91c1c; cursor: pointer; font-weight: bold; padding: 0 5px; }

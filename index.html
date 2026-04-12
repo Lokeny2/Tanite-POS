@@ -3,20 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tanite Price Calculator</title>
+        <title>Tanite Mini-Mart</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <main>
             <div class="calculator">
 
-                <!-- The Header -->
                 <div class="calc-header">
                     <h1>Tanite Mini-Mart</h1>
                     <p class="subtitle">Fresh prices, every day</p>
                 </div>
 
-                <!-- Category Filter Pills -->
                 <div class="filter-row">
                     <button class="filter-btn active" data-category="All">All</button>
                     <button class="filter-btn" data-category="Fruit">Fruit</button>
@@ -26,36 +24,49 @@
                     <button class="filter-btn" data-category="Grocery">Grocery</button>
                 </div>
 
-                <!-- User Inputs  -->
                 <div class="input-section">
                     <label for="productSelect">Product</label>
                     <select id="productSelect">
                         <option value="" disabled selected>Choose a product...</option>
                     </select>
 
+                    <!-- Live preview sits between product and quantity -->
+                    <div id="pricePreview" class="price-preview hidden">
+                        <span id="previewText"></span>
+                    </div>
+
                     <label for="qtyInput">Quantity</label>
                     <input type="number" id="qtyInput" placeholder="e.g. 3" min="1">
                 </div>
 
-                <!-- Action Buttons -->
+                <!-- Inline feedback replaces all alert() calls -->
+                <div id="feedbackBox" class="feedback-box hidden">
+                    <span id="feedbackText"></span>
+                </div>
+
                 <div class="action-row">
-                    <button id="calcBtn">Calculate Total</button>
+                    <button id="calcBtn">Calculate</button>
                     <button id="addToCartBtn" class="secondary-btn">Add to Cart</button>
                     <button id="clearBtn">Clear</button>
                 </div>
 
-                <!-- Receipt Output -->
                 <div id="receiptBox" class="receipt-box hidden">
                     <p id="receipt"></p>
                 </div>
             </div>
 
-           <div class="cart-container">
-              <ul id="cartList">
-              </ul>
-              <p>Grand Total: KSh <span id="totalDisplay">0.00</span></p>
+            <div class="cart-container">
+                <div class="cart-header-row">
+                    <p class="cart-title">Shopping Cart</p>
+                    <span id="cartBadge" class="cart-badge hidden">0</span>
+                </div>
+                <ul id="cartList"></ul>
+                <div class="cart-total">
+                    <p>Grand Total: KSh <span id="totalDisplay">0.00</span></p>
+                </div>
             </div>
         </main>
         <script src="script.js"></script>
     </body>
 </html>
+
